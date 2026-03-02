@@ -23,11 +23,9 @@ function App() {
       />
       <SVGs />
       <AviatorProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/aviator">
           <Routes>
-            <Route path="aviator">
-              <Route index element={<Aviator />} />
-            </Route>
+            <Route path="/" element={<Aviator />} />
           </Routes>
         </BrowserRouter>
       </AviatorProvider>
