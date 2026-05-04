@@ -1,0 +1,23 @@
+inverter:
+  ip: "192.168.1.100"       # IP-адрес Wi-Fi донгла инвертора (найти в роутере → DHCP)
+  serial: 1234567890        # Числовой серийный номер донгла (с наклейки на корпусе)
+  port: 8899                # Порт Solarman V5 (по умолчанию 8899)
+  rest_password: "admin"    # Пароль Solax REST API (обычно = серийный номер донгла)
+  poll_interval: 30         # Интервал опроса в секундах
+  timeout: 10               # Таймаут подключения в секундах
+  protocol: "auto"          # "auto", "solarman" или "solax_rest"
+
+mqtt:
+  host: "mosquitto"         # Имя Docker-сервиса или IP внешнего брокера
+  port: 1883
+  username: ""              # Оставить пустым если авторизация не нужна
+  password: ""
+  client_id: "solax_bridge"
+  base_topic: "inverter"
+  ha_discovery_prefix: "homeassistant"
+  qos: 1
+  retain: true
+
+logging:
+  level: "INFO"             # DEBUG, INFO, WARNING, ERROR
+  file: ""                  # Оставить пустым для вывода только в stdout

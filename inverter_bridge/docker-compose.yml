@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+
+  solax_bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solax_bridge
+    restart: unless-stopped
+    network_mode: host        # нужно для прямого доступа к инвертору на локальной сети
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    depends_on:
+      - mosquitto
+    environment:
+      - PYTHONUNBUFFERED=1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mosquitto_data:
+  mosquitto_logs:
